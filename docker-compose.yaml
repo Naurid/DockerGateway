@@ -1,0 +1,25 @@
+name: "MicroServiceDemoNetwork"
+services:
+  products-api:
+    container_name: "products_API"
+    hostname: "products.api"
+    build: ./Products.API
+    ports:
+      - "5002:8081"
+  orders-api:
+    container_name: "orders_API"
+    hostname: "orders.api"
+    build: ./Orders.API
+    ports:
+      - "5001:8081"
+  gateway:
+    container_name: "gateway"
+    build: ./gateway.API
+    ports:
+      - "81:8080"
+    links:
+      - products-api
+      - orders-api
+    depends_on:
+      - products-api
+      - orders-api
